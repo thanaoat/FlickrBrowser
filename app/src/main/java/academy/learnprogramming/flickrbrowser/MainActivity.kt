@@ -8,7 +8,7 @@ import android.view.MenuItem
 
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete {
     private val TAG = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        val getRawData = GetRawData()
+        val getRawData = GetRawData(this)
         getRawData.execute("https://api.flickr.com/services/feeds/photos_public.gne?tags=android,oreo&format=json&nojsoncallback=1")
 
 //        fab.setOnClickListener { view ->
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 //        private const val TAG = "MainActivity"
 //    }
 
-    fun onDownloadComplete(data: String, status: DownloadStatus) {
+    override fun onDownloadComplete(data: String, status: DownloadStatus) {
         if (status == DownloadStatus.OK) {
             Log.d(TAG, "onDownloadComplete called, data is $data")
         } else {
