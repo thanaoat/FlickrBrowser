@@ -11,7 +11,7 @@ class PhotoDetailsActivity : BaseActivity() {
         setContentView(R.layout.activity_photo_details)
         activateToolbar(true)
 
-        val photo = intent.getSerializableExtra(PHOTO_TRANSFER) as Photo
+        val photo = intent.getParcelableExtra<Photo>(PHOTO_TRANSFER)
 
         photo_title.text = photo.title
         photo_tags.text = photo.tags
