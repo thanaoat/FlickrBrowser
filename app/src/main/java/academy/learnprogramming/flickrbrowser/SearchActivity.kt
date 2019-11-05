@@ -3,6 +3,7 @@ package academy.learnprogramming.flickrbrowser
 import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.Menu
 import android.widget.SearchView
@@ -38,6 +39,10 @@ class SearchActivity : BaseActivity() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 Log.d(TAG, ".onQueryTextSubmit: called")
 
+                val sharedPref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+                sharedPref.edit().putString(FLICKR_QUERY, query).apply()
+                searchView?.clearFocus()
+
                 finish()
                 return true
             }
@@ -46,6 +51,11 @@ class SearchActivity : BaseActivity() {
                 return false
             }
         })
+
+        searchView?.setOnCloseListener {
+            finish()
+            false
+        }
         Log.d(TAG, ".onCreateOptionsMenu: returning")
         return true
     }
